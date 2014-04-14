@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="collage_bg_color">#fff</color>
+
+    <color name="list_divider_color">#000</color>
+
+</resources>

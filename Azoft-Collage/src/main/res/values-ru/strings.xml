@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Коллаж Azoft</string>
+
+    <!--general-->
+    <string name="error_internal_server">Ошибка подключения к серверу.</string>
+    <string name="error_no_network">Отсутствует подключение к Интернету.</string>
+    <string name="error_not_allowed">Недостаточно прав совершить это действие.</string>
+    <string name="error_user_no_images">Изображения у пользователя не найдены.</string>
+    <string name="error_unknown">Произошла неизвестная ошибка. Попробуйте повторить позднее.</string>
+    <string name="error_method_server">Ошибка обработки ответа сервера.</string>
+    <string name="error_disk_error">Ошибка работы с дисокм. Возможно он заполнен.</string>
+    <string name="button_enter">Ввод</string>
+    <string name="button_ok">Ок</string>
+
+    <!--start-->
+    <string name="text_select_current_user">Выберите пользователя</string>
+    <string name="text_current_user_selected">%s</string>
+    <string name="error_select_user_first">Выберите пользователя</string>
+    <string name="error_select_collage_first">Выберите коллаж</string>
+
+    <!--user nick selection-->
+    <string name="title_user_nick_selection">Поиск по нику пользователя</string>
+    <string name="title_user_nick_selection_result">Результаты для \"%s\"</string>
+    <string name="hint_enter_user_name">Ник пользователя</string>
+    <string name="text_no_users_found_for">Ниодного пользователя не найдено для %s</string>
+    <string name="text_create_collage">Давай коллаж!</string>
+
+    <!--collage edition-->
+    <string name="title_collage_builder">Создание коллажа</string>
+    <string name="error_fill_all_items_first">Заполните все элементы коллажа</string>
+    <string name="text_preview_collage">Превью</string>
+
+    <!--image selection-->
+    <string name="title_select_image">Выберите картинку</string>
+    <string name="text_user_no_images">Картинки для %s не найдены</string>
+    <string name="text_update">Обновить данные</string>
+
+    <!--preview-->
+    <string name="title_collage_preview">Превью</string>
+    <string name="text_share_collage">Поделиться</string>
+    <string name="text_email_chooser">Поделиться используя…</string>
+    <string name="dialog_collage_creation_problem_title">Ошибка</string>
+    <string name="dialog_collage_creation_problem_message">Извините, но коллаж не был создан. Возможно из-за ошибки сохранения или из-за нехватки памяти…</string>
+    <string name="text_image_collage_preview">collageimage.png</string>
+    <string name="text_email_subject">Коллаж</string>
+
+</resources>

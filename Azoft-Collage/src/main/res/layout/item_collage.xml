@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.redmadrobot.azoft.collage.ui.widgets.CollageViewGroup
+        android:id="@+id/collage_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/iv_selection_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/selected_collage"
+        android:background="#000"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        tools:ignore="ContentDescription" />
+
+</RelativeLayout>

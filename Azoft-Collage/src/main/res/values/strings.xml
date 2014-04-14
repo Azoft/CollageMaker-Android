@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Azoft-Collage</string>
+
+    <!--general-->
+    <string name="error_internal_server">Failed to connect to server.</string>
+    <string name="error_no_network">No connection to the network.</string>
+    <string name="error_not_allowed">You are not allowed to do this.</string>
+    <string name="error_user_no_images">User has no images.</string>
+    <string name="error_unknown">An unknown error has occurred. Please try again later.</string>
+    <string name="error_method_server">Error processing server response.</string>
+    <string name="error_disk_error">Problems in disk writing. Maybe it is full.</string>
+    <string name="button_enter">Enter</string>
+    <string name="button_ok">Ok</string>
+
+    <!--start-->
+    <string name="text_select_current_user">Select user please</string>
+    <string name="text_current_user_selected">%s</string>
+    <string name="error_select_user_first">Please select user first</string>
+    <string name="error_select_collage_first">Please select collage first</string>
+
+    <!--user nick selection-->
+    <string name="title_user_nick_selection">Search for user\'s nickname</string>
+    <string name="title_user_nick_selection_result">Search results for \"%s\"</string>
+    <string name="hint_enter_user_name">User Nickname</string>
+    <string name="text_no_users_found_for">No users found for %s</string>
+    <string name="text_create_collage">Create collage</string>
+
+    <!--collage edition-->
+    <string name="title_collage_builder">Collage editor</string>
+    <string name="error_fill_all_items_first">Please fill all image items first</string>
+    <string name="text_preview_collage">Preview</string>
+
+    <!--image selection-->
+    <string name="title_select_image">Select an image</string>
+    <string name="text_user_no_images">No %s\'s images found</string>
+    <string name="text_update">Update feed</string>
+
+    <!--preview-->
+    <string name="title_collage_preview">Preview</string>
+    <string name="text_share_collage">Share</string>
+    <string name="text_email_chooser">Share using…</string>
+    <string name="dialog_collage_creation_problem_title">Error</string>
+    <string name="dialog_collage_creation_problem_message">Sorry but your collage can\'t be created. May be it is because problem with disk space or memory issue…</string>
+    <string name="text_image_collage_preview">collageimage.png</string>
+    <string name="text_email_subject">Collage</string>
+
+</resources>

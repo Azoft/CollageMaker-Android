@@ -1,0 +1,14 @@
+<resources>
+
+    <dimen name="item_user_picture_size">80dp</dimen>
+    <dimen name="item_user_padding">10dp</dimen>
+
+    <dimen name="item_collage_grid_size">120dp</dimen>
+    <dimen name="item_collage_spacing">5dp</dimen>
+
+    <dimen name="item_image_selection_grid_size">90dp</dimen>
+    <dimen name="item_image_selection_spacing">2dp</dimen>
+
+    <dimen name="list_divider_height">1dp</dimen>
+
+</resources>

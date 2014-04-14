@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.redmadrobot.azoft.collage">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <supports-screens android:anyDensity="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:name="com.redmadrobot.azoft.collage.app.CollageApplication">
+
+        <activity
+            android:name="com.redmadrobot.azoft.collage.ui.activities.phone.StartActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.redmadrobot.azoft.collage.ui.activities.phone.UserSelectionActivity" />
+
+        <activity
+            android:name="com.redmadrobot.azoft.collage.ui.activities.phone.CollageBuilderActivity"
+            android:label="@string/title_collage_builder" />
+
+        <activity
+            android:name="com.redmadrobot.azoft.collage.ui.activities.phone.ImageSelectionFromUserFeedActivity"
+            android:label="@string/title_select_image" />
+
+        <activity
+            android:name="com.redmadrobot.azoft.collage.ui.activities.phone.CollagePreviewActivity"
+            android:label="@string/title_collage_preview" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.redmadrobot.azoft.collage.contentproviders.media"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gv_collagees"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnWidth="@dimen/item_collage_grid_size"
+    android:verticalSpacing="@dimen/item_collage_spacing"
+    android:horizontalSpacing="@dimen/item_collage_spacing"
+    android:numColumns="auto_fit"
+    android:stretchMode="columnWidth" />
