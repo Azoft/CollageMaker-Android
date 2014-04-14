@@ -1,0 +1,6 @@
+.gradle
+gen
+workspace.xml
+build
+/.idea
+/*.iml
