@@ -11,7 +11,7 @@ This code allows to import 100 photos from any Instagram user feed into your app
 ## Support
 
 * Android 2.3+
-* Deviñes: All
+* Devices: All
 
 ## The Image Loading Algorithm
 
