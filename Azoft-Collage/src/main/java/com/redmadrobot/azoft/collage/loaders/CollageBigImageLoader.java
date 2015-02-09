@@ -52,7 +52,7 @@ public class CollageBigImageLoader extends DataAsyncTaskLibLoader<CollageRegionD
 			throw new DiskWriteException();
 		}
 
-		final HttpURLConnection connection = ServerConnector.getOkHttpClient().open(new URL(mPost.getStandardResolutionImage().getUrl()));
+		final HttpURLConnection connection = (HttpURLConnection) new URL(mPost.getStandardResolutionImage().getUrl()).openConnection();
 
 		connection.setUseCaches(true);
 		final int responseCode = connection.getResponseCode();

@@ -134,7 +134,8 @@ public final class CommonUtils {
 		emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		emailIntent.putExtra(Intent.EXTRA_STREAM, uriAsPath);
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailSubject);
-		emailIntent.setType("message/rfc822");
+		emailIntent.putExtra(Intent.EXTRA_TEXT, emailSubject);
+		emailIntent.setType("image/*");
 		final List<ResolveInfo> emailActivities = context.getPackageManager().queryIntentActivities(emailIntent, 0);
 		// we should grand all interested apps read permission
 		for (final ResolveInfo resolveInfo : emailActivities) {
