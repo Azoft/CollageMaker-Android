@@ -36,7 +36,7 @@ public final class ServerConnector {
 	private ServerConnector() {
 		final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY).create();
 
-		final RestAdapter restAdapter = new RestAdapter.Builder().setServer(SERVER_URL_WITH_VERSION).setConverter(new GsonConverter(gson))
+		final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(SERVER_URL_WITH_VERSION).setConverter(new GsonConverter(gson))
 				.setErrorHandler(new ErrorHandler() {
 					@Override
 					public Throwable handleError(final RetrofitError cause) {

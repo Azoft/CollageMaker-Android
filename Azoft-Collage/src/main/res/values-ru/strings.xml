@@ -24,7 +24,7 @@
     <string name="title_user_nick_selection">Поиск по нику пользователя</string>
     <string name="title_user_nick_selection_result">Результаты для \"%s\"</string>
     <string name="hint_enter_user_name">Ник пользователя</string>
-    <string name="text_no_users_found_for">Ниодного пользователя не найдено для %s</string>
+    <string name="text_no_users_found_for">Ни одного пользователя не найдено для %s</string>
     <string name="text_create_collage">Давай коллаж!</string>
 
     <!--collage edition-->

@@ -6,8 +6,7 @@
     <item
         android:id="@+id/menu_search"
         android:title="@string/hint_enter_user_name"
-        android:icon="@drawable/abc_ic_search"
+        android:icon="@android:drawable/ic_menu_search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView" />
-
 </menu>
