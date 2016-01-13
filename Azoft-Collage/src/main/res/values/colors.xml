@@ -5,4 +5,6 @@
 
     <color name="list_divider_color">#000</color>
 
+    <color name="semi_transparent_black">#80000000</color>
+
 </resources>

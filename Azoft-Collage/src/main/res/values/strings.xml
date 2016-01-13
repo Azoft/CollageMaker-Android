@@ -14,6 +14,9 @@
     <string name="button_enter">Enter</string>
     <string name="button_ok">Ok</string>
 
+    <!-- auth-->
+    <string name="error_no_access_token_instagram">Error during Instagram login process. Please, try again.</string>
+
     <!--start-->
     <string name="text_select_current_user">Select user please</string>
     <string name="text_current_user_selected">%s</string>
