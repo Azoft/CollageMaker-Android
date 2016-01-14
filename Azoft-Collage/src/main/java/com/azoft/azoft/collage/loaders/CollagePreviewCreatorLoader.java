@@ -131,11 +131,6 @@ public class CollagePreviewCreatorLoader extends DataAsyncTaskLibLoader<String> 
         resultBitmap.recycle();
     }
 
-    private int getCollageItemSampleSize(final File imageFile, final int regionWidth, final int regionHeight) {
-        final int imageSize = getImageSize(imageFile);
-        return Math.max(1, imageSize / Math.max(regionWidth, regionHeight));
-    }
-
     private int getImageSize(final File imageFile) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
