@@ -61,8 +61,7 @@ public class UserFeedAdapter extends BaseAdapter {
         }
         final Post post = getItem(position);
 
-        holder.mProgressView.setVisibility(View.GONE);
-        holder.mImageView.setVisibility(View.VISIBLE);
+        holder.mProgressView.setVisibility(View.VISIBLE);
 
         Picasso.with(mLayoutInflater.getContext()).load(post.getLowResolutionImage().getUrl())
                 .resizeDimen(R.dimen.item_image_selection_grid_size, R.dimen.item_image_selection_grid_size).centerInside()

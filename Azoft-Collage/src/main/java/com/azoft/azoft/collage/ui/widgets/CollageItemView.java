@@ -1,6 +1,8 @@
 package com.azoft.azoft.collage.ui.widgets;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -16,6 +18,7 @@ import com.azoft.azoft.collage.data.CollageRegionData;
 import com.azoft.azoft.collage.utils.CollageRegion;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 /**
  * Will show empty view (plus view) or image data for this region it correct place. If this view is square image is scaled and no gesture can be
@@ -68,7 +71,7 @@ public class CollageItemView extends ImageView {
             public boolean onScale(final ScaleGestureDetector detector) {
                 final float oldScaleFactor = mRegionData.getImageScale();
                 // we use "+" but "*" because here it is more suitable I think
-                float newScaleFactor = mRegionData.getImageScale() + detector.getScaleFactor() - 1;
+                float newScaleFactor = mRegionData.getImageScale() + (detector.getScaleFactor() - 1) * 0.7f;
                 // Don't let the object get too small or too large.
                 newScaleFactor = Math.max(MIN_SCALE_FACTOR, Math.min(newScaleFactor, MAX_SCALE_FACTOR));
 
@@ -197,13 +200,27 @@ public class CollageItemView extends ImageView {
         } else {
             final int width = getWidth();
             final int height = getHeight();
-            if (0 == width || 0 == height) {
+
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+
+            BitmapFactory.decodeFile(mRegionData.getImageFile().getPath(), options);
+
+            if (0 == width || 0 == height || 0 == options.outWidth || 0 == options.outHeight) {
                 return;
             }
             mNeedInit = false;
 
-            final int maxSize = Math.max(width, height);
-            Picasso.with(getContext()).load(mRegionData.getImageFile()).resize(maxSize, maxSize).skipMemoryCache().noFade()
+            options.outWidth = 530;
+            options.outHeight = 707;
+
+            final int scale = (int) Math.ceil(Math.max(1f * options.outWidth / width, 1f * options.outHeight / height));
+            final int resultWidth = options.outWidth * scale;
+            final int resultHeight = options.outHeight * scale;
+
+            Picasso.with(getContext()).load(mRegionData.getImageFile())
+                    .resize(resultWidth, resultHeight)
+                    .skipMemoryCache().noFade()
                     .error(R.drawable.ic_action_new).into(this, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -221,9 +238,8 @@ public class CollageItemView extends ImageView {
                             if (bitmapWidth < 0 || bitmapHeight < 0) {
                                 return;
                             }
-                            final int maxSize = Math.max(width, height);
 
-                            mMinScale = 1f * maxSize / bitmapWidth;
+                            mMinScale = 1f * Math.max(1f * width / bitmapWidth, 1f * height / bitmapHeight);
                             mMaxScale = mMinScale * MAX_SCALE_FACTOR;
 
                             updateScale();
@@ -270,8 +286,8 @@ public class CollageItemView extends ImageView {
             return ScrollHolder.EMPTY;
         }
 
-        final int scrollXMax = Math.abs(Math.round(width - bitmapHeight * scaleFactor));
-        final int scrollYMax = Math.abs(Math.round(height - bitmapWidth * scaleFactor));
+        final int scrollXMax = Math.abs(Math.round(width - bitmapWidth * scaleFactor));
+        final int scrollYMax = Math.abs(Math.round(height - bitmapHeight * scaleFactor));
         return new ScrollHolder(scrollXMax, scrollYMax);
     }
 

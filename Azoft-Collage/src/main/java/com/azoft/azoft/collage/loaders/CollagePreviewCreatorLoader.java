@@ -55,7 +55,17 @@ public class CollagePreviewCreatorLoader extends DataAsyncTaskLibLoader<String> 
             canvas.drawColor(getContext().getResources().getColor(R.color.collage_bg_color));
 
             for (final Map.Entry<CollageRegion, CollageRegionData> entryItem : collageDataMap.entrySet()) {
-                drawCollageRegionOnCanvas(canvas, entryItem.getKey(), entryItem.getValue());
+                int sampleSize = 1;
+                boolean done = false;
+                do {
+                    try {
+                        drawCollageRegionOnCanvas(canvas, entryItem.getKey(), entryItem.getValue(), sampleSize);
+                        done = true;
+                    } catch (final Throwable e) {
+                        // pass
+                    }
+                    sampleSize *= 2;
+                } while (!done && sampleSize < 100);
             }
             return MediaUtils.insertImage(outBitmap, getContext().getString(R.string.text_image_collage_preview));
         } catch (final Throwable throwable) {
@@ -67,14 +77,11 @@ public class CollagePreviewCreatorLoader extends DataAsyncTaskLibLoader<String> 
         }
     }
 
-    private void drawCollageRegionOnCanvas(final Canvas canvas, final CollageRegion collageRegion, final CollageRegionData collageRegionData)
+    private void drawCollageRegionOnCanvas(final Canvas canvas, final CollageRegion collageRegion, final CollageRegionData collageRegionData, final int sampleSize)
             throws CollageCreationException {
         // region visible width and height
         final int regionWidth = (int) (canvas.getWidth() * collageRegion.getWidth());
         final int regionHeight = (int) (canvas.getWidth() * collageRegion.getHeight());
-
-        // sample size for memory optimization
-        final int sampleSize = getCollageItemSampleSize(collageRegionData.getImageFile(), regionWidth, regionHeight);
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = sampleSize;
@@ -82,14 +89,14 @@ public class CollagePreviewCreatorLoader extends DataAsyncTaskLibLoader<String> 
         if (null == regionDecodedBitmap) {
             throw new CollageCreationException();
         }
-        final int maxRegionSize = Math.max(regionWidth, regionHeight);
         final Bitmap memoryOptimizedDecodedBitmap;
         if (regionDecodedBitmap.getWidth() == regionWidth && regionDecodedBitmap.getHeight() == regionHeight) {
             // decoded bitmap is the same as our region. nothing to do more
             memoryOptimizedDecodedBitmap = regionDecodedBitmap;
         } else {
             // we should make our decoded bitmap scaled for region. because region may be not square we use it's max size
-            final Bitmap tmp = Bitmap.createScaledBitmap(regionDecodedBitmap, maxRegionSize, maxRegionSize, true);
+            final float imageScale = Math.max(1f * regionWidth / regionDecodedBitmap.getWidth(), 1f * regionHeight / regionDecodedBitmap.getHeight());
+            final Bitmap tmp = Bitmap.createScaledBitmap(regionDecodedBitmap, Math.round(imageScale * regionDecodedBitmap.getWidth()), Math.round(imageScale * regionDecodedBitmap.getHeight()), true);
             if (tmp != regionDecodedBitmap) {
                 regionDecodedBitmap.recycle();
             }

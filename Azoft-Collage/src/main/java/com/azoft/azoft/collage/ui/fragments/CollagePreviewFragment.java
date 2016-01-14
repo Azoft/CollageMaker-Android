@@ -42,6 +42,8 @@ public class CollagePreviewFragment extends ActionBarLoaderFragment {
 
     @InjectView(R.id.iv_collage)
     private ImageView mCollageImageView;
+    @InjectView(R.id.progress_bar)
+    private View mProgressView;
 
     @InjectSavedState
     private String mResultPath;
@@ -64,6 +66,7 @@ public class CollagePreviewFragment extends ActionBarLoaderFragment {
         if (null == getFragmentManager().findFragmentByTag(CREATION_PROBLEM_FRAGMENT)) {
             // we should check if we already create image or not
             if (null == mResultPath) {
+                mProgressView.setVisibility(View.VISIBLE);
                 getLoaderHelper().initAsyncLoader(getLoaderHelper().getLoaderId(KOLAJ_PREVIEW_LOADER),
                         new CollagePreviewCreatorLoader(getActivity(), mCollageFillData));
             } else {
@@ -95,6 +98,7 @@ public class CollagePreviewFragment extends ActionBarLoaderFragment {
 
     private void setResultPath(final String resultPath) {
         mResultPath = resultPath;
+        mProgressView.setVisibility(View.GONE);
 
         Picasso.with(getActivity()).load(resultPath).fit().error(R.drawable.ic_action_new).skipMemoryCache().into(mCollageImageView);
         getActionBarActivity().supportInvalidateOptionsMenu();
