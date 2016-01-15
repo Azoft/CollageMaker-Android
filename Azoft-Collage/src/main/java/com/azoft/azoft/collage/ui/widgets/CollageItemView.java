@@ -1,7 +1,6 @@
 package com.azoft.azoft.collage.ui.widgets;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
@@ -18,7 +17,6 @@ import com.azoft.azoft.collage.data.CollageRegionData;
 import com.azoft.azoft.collage.utils.CollageRegion;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 /**
  * Will show empty view (plus view) or image data for this region it correct place. If this view is square image is scaled and no gesture can be
@@ -211,12 +209,16 @@ public class CollageItemView extends ImageView {
             }
             mNeedInit = false;
 
-            options.outWidth = 530;
-            options.outHeight = 707;
-
-            final int scale = (int) Math.ceil(Math.max(1f * options.outWidth / width, 1f * options.outHeight / height));
-            final int resultWidth = options.outWidth * scale;
-            final int resultHeight = options.outHeight * scale;
+            final float scale = Math.max(1f * width / options.outWidth, 1f * height / options.outHeight);
+            final int resultWidth;
+            final int resultHeight;
+            if (scale < 1) {
+                resultWidth = (int) (options.outWidth *  scale);
+                resultHeight = (int) (options.outHeight * scale);
+            } else {
+                resultWidth = (int) (options.outWidth * Math.ceil(scale));
+                resultHeight = (int) (options.outHeight * Math.ceil(scale));
+            }
 
             Picasso.with(getContext()).load(mRegionData.getImageFile())
                     .resize(resultWidth, resultHeight)

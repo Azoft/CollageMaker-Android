@@ -5,13 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
-import com.mig35.loaderlib.loaders.DataAsyncTaskLibLoader;
 import com.azoft.azoft.collage.R;
 import com.azoft.azoft.collage.data.CollageFillData;
 import com.azoft.azoft.collage.data.CollageRegionData;
 import com.azoft.azoft.collage.exceptions.CollageCreationException;
 import com.azoft.azoft.collage.utils.CollageRegion;
 import com.azoft.azoft.collage.utils.MediaUtils;
+import com.mig35.loaderlib.loaders.DataAsyncTaskLibLoader;
 
 import java.io.File;
 import java.util.HashMap;
@@ -48,36 +48,52 @@ public class CollagePreviewCreatorLoader extends DataAsyncTaskLibLoader<String> 
             maxSize = Math.max(maxSize, getImageSize(regionData.getImageFile()));
             collageDataMap.put(collageRegion, regionData);
         }
-        Bitmap outBitmap = null;
-        try {
-            outBitmap = Bitmap.createBitmap(maxSize, maxSize, Bitmap.Config.ARGB_8888);
-            final Canvas canvas = new Canvas(outBitmap);
-            canvas.drawColor(getContext().getResources().getColor(R.color.collage_bg_color));
 
-            for (final Map.Entry<CollageRegion, CollageRegionData> entryItem : collageDataMap.entrySet()) {
-                int sampleSize = 1;
-                boolean done = false;
-                do {
-                    try {
-                        drawCollageRegionOnCanvas(canvas, entryItem.getKey(), entryItem.getValue(), sampleSize);
-                        done = true;
-                    } catch (final Throwable e) {
-                        // pass
-                    }
-                    sampleSize *= 2;
-                } while (!done && sampleSize < 100);
+        int sampleSize = 1;
+        Bitmap outBitmap = null;
+        do {
+            try {
+                outBitmap = Bitmap.createBitmap(maxSize / sampleSize, maxSize / sampleSize, Bitmap.Config.ARGB_8888);
+
+                final Canvas canvas = new Canvas(outBitmap);
+                canvas.drawColor(getContext().getResources().getColor(R.color.collage_bg_color));
+
+                for (final Map.Entry<CollageRegion, CollageRegionData> entryItem : collageDataMap.entrySet()) {
+                    drawCollageRegionOnCanvas(canvas, entryItem.getKey(), entryItem.getValue());
+                }
+                break;
+            } catch (final OutOfMemoryError thr) {
+                sampleSize *= 2;
+                if (null != outBitmap) {
+                    outBitmap.recycle();
+                }
+                outBitmap = null;
             }
+        } while (sampleSize < 100);
+
+        if (null == outBitmap) {
+            throw new CollageCreationException(new OutOfMemoryError());
+        }
+        try {
             return MediaUtils.insertImage(outBitmap, getContext().getString(R.string.text_image_collage_preview));
-        } catch (final Throwable throwable) {
-            throw new CollageCreationException(throwable);
         } finally {
-            if (null != outBitmap) {
-                outBitmap.recycle();
-            }
+            outBitmap.recycle();
         }
     }
 
-    private void drawCollageRegionOnCanvas(final Canvas canvas, final CollageRegion collageRegion, final CollageRegionData collageRegionData, final int sampleSize)
+    private void drawCollageRegionOnCanvas(final Canvas canvas, final CollageRegion collageRegion, final CollageRegionData collageRegionData) throws CollageCreationException {
+        for (int sampleSize = 1; sampleSize < 100; sampleSize *= 2) {
+            try {
+                drawCollageRegionOnCanvasOld(canvas, collageRegion, collageRegionData, sampleSize);
+                return;
+            } catch (final OutOfMemoryError error) {
+                // pass
+            }
+        }
+        throw new OutOfMemoryError();
+    }
+
+    private void drawCollageRegionOnCanvasOld(final Canvas canvas, final CollageRegion collageRegion, final CollageRegionData collageRegionData, final int sampleSize)
             throws CollageCreationException {
         // region visible width and height
         final int regionWidth = (int) (canvas.getWidth() * collageRegion.getWidth());
@@ -96,7 +112,8 @@ public class CollagePreviewCreatorLoader extends DataAsyncTaskLibLoader<String> 
         } else {
             // we should make our decoded bitmap scaled for region. because region may be not square we use it's max size
             final float imageScale = Math.max(1f * regionWidth / regionDecodedBitmap.getWidth(), 1f * regionHeight / regionDecodedBitmap.getHeight());
-            final Bitmap tmp = Bitmap.createScaledBitmap(regionDecodedBitmap, Math.round(imageScale * regionDecodedBitmap.getWidth()), Math.round(imageScale * regionDecodedBitmap.getHeight()), true);
+            final Bitmap tmp = Bitmap.createScaledBitmap(regionDecodedBitmap, Math.round(imageScale * regionDecodedBitmap.getWidth()), Math
+                    .round(imageScale * regionDecodedBitmap.getHeight()), true);
             if (tmp != regionDecodedBitmap) {
                 regionDecodedBitmap.recycle();
             }

@@ -19,6 +19,7 @@ public class CollageRegionData implements Serializable {
     private Float mImageLeft;
     private Float mImageTop;
     private float mImageScale;
+    private int mImageRealSizeScale;
 
     public CollageRegionData(final File imageFile) {
         if (null == imageFile) {
